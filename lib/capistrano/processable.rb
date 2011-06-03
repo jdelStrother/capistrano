@@ -14,7 +14,7 @@ module Capistrano
     end
 
     def process_iteration(wait=nil, &block)
-      ensure_each_session { |session| session.preprocess }
+      ensure_each_session { |session| session.preprocess; session.send_global_request("keep-alive@openssh.com") }
 
       return false if block && !block.call(self)
 
